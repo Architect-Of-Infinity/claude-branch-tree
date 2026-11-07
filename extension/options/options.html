@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Claude Branch Tree — Settings</title>
+<link rel="icon" href="../icons/icon32.png">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+  :root { --paper:#f6f2e9; --card:#fffdf8; --ink:#1d1b16; --ink-2:#5a554a; --ink-3:#938c7d; --rule:#e0d9c9; --rule-2:#ebe5d7; --accent:#c2593a; --soft:rgba(194,89,58,.1);
+    --display:"Fraunces", Georgia, serif; --sans:"IBM Plex Sans", system-ui, sans-serif; --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace; }
+  @media (prefers-color-scheme: dark) { :root { --paper:#191816; --card:#211f1c; --ink:#f0ebe1; --ink-2:#bab4a7; --ink-3:#857f73; --rule:#35322d; --rule-2:#2b2925; --accent:#e2865f; --soft:rgba(226,134,95,.13); } }
+  * { box-sizing: border-box; }
+  body { margin:0; color:var(--ink); font:14px/1.55 var(--sans);
+    background: radial-gradient(900px 400px at 90% -10%, var(--soft), transparent 60%), var(--paper); }
+  main { max-width: 760px; margin: 0 auto; padding: 34px 22px 60px; }
+  .brand { display:flex; gap:14px; align-items:center; margin-bottom:6px; }
+  .brand img { width:44px; height:44px; border-radius:12px; }
+  .k { font:600 11px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--accent); }
+  h1 { font:700 30px/1.1 var(--display); margin:4px 0 0; letter-spacing:-.01em; }
+  h2 { font:700 18px var(--display); margin: 0 0 6px; }
+  .muted { color: var(--ink-2); }
+  section { background: var(--card); border: 1px solid var(--rule-2); border-radius: 14px; padding: 18px 20px; margin: 18px 0; box-shadow: 0 10px 30px -20px rgba(60,40,10,.45); }
+  .f { display: grid; grid-template-columns: 1fr auto; gap: 3px 18px; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--rule-2); }
+  .f:last-child { border-bottom: 0; }
+  .f label { font-weight: 500; }
+  .f small { grid-column: 1; color: var(--ink-3); font-size: 12.5px; }
+  select, input[type=number] { font: 13px var(--sans); padding: 6px 9px; border-radius: 8px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
+  input[type=number] { width: 86px; font-family: var(--mono); }
+  input[type=checkbox] { appearance: none; width: 38px; height: 22px; border-radius: 11px; background: var(--rule); position: relative; cursor: pointer; transition: background .15s; }
+  input[type=checkbox]::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: transform .15s; }
+  input[type=checkbox]:checked { background: var(--accent); }
+  input[type=checkbox]:checked::after { transform: translateX(16px); }
+  input:focus-visible, select:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button { font: 500 13px var(--sans); padding: 8px 14px; border-radius: 9px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .row label { display:flex; gap:8px; align-items:center; color: var(--ink-2); }
+  #msg { min-height: 1.5em; color: var(--accent); font: 12.5px var(--mono); position: fixed; bottom: 18px; right: 22px; background: var(--card); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--rule); }
+  #msg:empty { display: none; }
+  code { background: var(--paper); padding: 1px 6px; border-radius: 5px; font: 12.5px var(--mono); }
+</style>
+</head>
+<body>
+<main>
+  <div class="brand"><img src="../icons/icon128.png" alt=""><div><div class="k">Claude Branch Tree</div><h1>Settings</h1></div></div>
+  <p class="muted">Changes save automatically and apply to open claude.ai tabs straight away.</p>
+
+  <section>
+    <h2>Display</h2>
+    <div class="f"><label for="viewMode">Default view</label>
+      <select id="viewMode"><option value="human">Your messages only</option><option value="full">Your messages + Claude's replies</option></select>
+      <small>Press <b>M</b> in the panel to switch.</small></div>
+    <div class="f"><label for="previewLength">Preview length (characters)</label>
+      <input id="previewLength" type="number" min="0" max="400" step="10">
+      <small>0 shows labels only (rows without a label still show text).</small></div>
+    <div class="f"><label for="showTimestamps">Show message time on rows</label><input id="showTimestamps" type="checkbox"></div>
+    <div class="f"><label for="launcher">Launcher button</label>
+      <select id="launcher">
+        <option value="auto">Chat toolbar (floating if not found)</option>
+        <option value="toolbar">Chat toolbar only</option>
+        <option value="floating">Floating button</option>
+        <option value="none">None (shortcut / extension icon only)</option>
+      </select></div>
+    <div class="f"><label for="openOnLoad">Open the panel automatically on chat pages</label><input id="openOnLoad" type="checkbox"></div>
+  </section>
+
+  <section>
+    <h2>Behaviour</h2>
+    <div class="f"><label for="autoRefresh">Refresh the tree after you send, edit or retry</label><input id="autoRefresh" type="checkbox"></div>
+    <div class="f"><label for="fallbackPollSec">Safety refresh every (seconds, while open)</label>
+      <input id="fallbackPollSec" type="number" min="0" max="600" step="5">
+      <small>0 = off. The old userscript refetched every 1.5 s; this only fills gaps auto-refresh misses.</small></div>
+    <div class="f"><label for="inlineArrows">Show ‹ 2/3 › arrows under messages that have other versions</label><input id="inlineArrows" type="checkbox">
+      <small>claude.ai's new layout removed its own arrows. Clicking one reloads the chat onto that branch (this tab only).</small></div>
+    <div class="f"><label for="confirmSwitch">Ask before switching branches</label><input id="confirmSwitch" type="checkbox"></div>
+  </section>
+
+  <section>
+    <h2>Document vault</h2>
+    <div class="f"><label for="vaultAuto">Keep every document, file and upload from every branch</label><input id="vaultAuto" type="checkbox">
+      <small>Saved on this computer when you open a chat. Files Claude makes are captured per branch before another branch can overwrite them.</small></div>
+    <div class="f"><label for="vaultReplies">Also keep the full text of every Claude reply</label><input id="vaultReplies" type="checkbox"></div>
+    <p><button id="openVault" class="primary">Open the vault</button></p>
+  </section>
+
+  <section>
+    <h2>Keyboard shortcut</h2>
+    <p class="muted">Default <b>Alt+B</b>. Change it at <code>chrome://extensions/shortcuts</code> (Chrome doesn't let extensions open that page for you).</p>
+  </section>
+
+  <section>
+    <h2>Labels &amp; stars backup</h2>
+    <p class="muted">Labels, stars and collapsed rows are stored on this computer only. Back them up before reinstalling.</p>
+    <div class="row">
+      <button id="export" class="primary">Download backup (.json)</button>
+      <label><button id="importBtn">Import backup…</button><input id="importFile" type="file" accept=".json,application/json" hidden></label>
+      <label><input id="merge" type="checkbox" checked> Merge with what's already saved</label>
+    </div>
+    <p id="msg"></p>
+  </section>
+</main>
+<script src="../src/settings.js"></script>
+<script src="../src/storage.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "Claude Branch Tree",
+  "short_name": "Branch Tree",
+  "version": "2.2.0",
+  "description": "See every edit and retry in a claude.ai chat as a tree, switch to any branch, and keep every document from every branch.",
+  "minimum_chrome_version": "111",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "Branch Tree: Alt+B on claude.ai \u00b7 elsewhere opens the vault",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+B"
+      },
+      "description": "Show or hide the branch tree panel"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "src/page-hook.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://claude.ai/*"
+      ],
+      "js": [
+        "src/settings.js",
+        "src/tree.js",
+        "src/storage.js",
+        "src/api.js",
+        "src/dom.js",
+        "src/styles.js",
+        "src/panel.js",
+        "src/vault.js",
+        "src/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

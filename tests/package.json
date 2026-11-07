@@ -1,0 +1,9 @@
+{
+  "name": "claude-branch-tree-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --test --test-concurrency=1 tree.test.js hook.test.js vault.test.js e2e.test.js",
+    "smoke": "node chrome-smoke.js"
+  },
+  "devDependencies": { "jsdom": "^24.1.0", "playwright-core": "^1.63.0" }
+}
